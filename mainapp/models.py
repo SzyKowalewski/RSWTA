@@ -35,5 +35,5 @@ class Uzytkownicy(models.Model):
         return self.Nazwa_Uzytkownika
 
 class Obejrzane(models.Model):
-    ID_Produkcji = models.ForeignKey()
-    ID_Uzytkownika = models.ForeignKey()
+    ID_Produkcji = models.ForeignKey(Produkcje, on_delete=models.CASCADE)
+    ID_Uzytkownika = models.ForeignKey(Uzytkownicy, on_delete=models.CASCADE)
