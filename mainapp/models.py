@@ -11,6 +11,16 @@ class Produkcje(models.Model):
     def __str__(self):
         return self.Tytul
 
+
+class Uzytkownicy(models.Model):
+    Nazwa_Uzytkownika = models.TextField()
+    Haslo = models.TextField()
+    E_mail = models.TextField()
+    Publiczne = models.BooleanField()
+
+    def __str__(self):
+        return self.Nazwa_Uzytkownika
+
 class Do_obejrzenia(models.Model):
     ID_Produkcji = models.ForeignKey(Produkcje, on_delete=models.CASCADE)
     ID_Uzytkownika = models.ForeignKey(Uzytkownicy, on_delete=models.CASCADE)
@@ -25,14 +35,7 @@ class Rezencje(models.Model):
         return self.Komentarz
 
 
-class Uzytkownicy(models.Model):
-    Nazwa_Uzytkownika = models.TextField()
-    Haslo = models.TextField()
-    E_mail = models.TextField()
-    Publiczne = models.BooleanField()
 
-    def __str__(self):
-        return self.Nazwa_Uzytkownika
 
 class Obejrzane(models.Model):
     ID_Produkcji = models.ForeignKey(Produkcje, on_delete=models.CASCADE)
