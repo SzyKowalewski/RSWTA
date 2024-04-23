@@ -5,3 +5,4 @@
 /mainapp/migrations/__pycache__
 .idea/dataSources.xml
 /.idea
+db.sqlite3
