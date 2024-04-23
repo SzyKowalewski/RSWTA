@@ -1,12 +1,17 @@
 from django.db import models
 
 
+class Kategorie(models.Model): # NOQA
+    Nazwa = models.TextField() # NOQA
+
+
 class Produkcje(models.Model): # NOQA
     Tytul = models.CharField(max_length=50) # NOQA
     Rezyser = models.CharField(max_length=50) # NOQA
     Dlugosc_ilosc_odcinkow = models.IntegerField() # NOQA
     Opis = models.CharField(max_length=1000) # NOQA
     Data_premiery = models.DateField() # NOQA
+    ID_Uzytkownika = models.ForeignKey(Kategorie, on_delete=models.CASCADE) # NOQA
 
     def __str__(self):
         return self.Tytul
