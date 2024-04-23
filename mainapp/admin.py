@@ -19,3 +19,7 @@ admin.site.register(Rezencje)
 from .models import Obejrzane
 
 admin.site.register(Obejrzane)
+
+from .models import Kategorie
+
+admin.site.register(Kategorie)
