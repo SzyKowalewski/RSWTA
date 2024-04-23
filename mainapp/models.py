@@ -11,7 +11,7 @@ class Produkcje(models.Model): # NOQA
     Dlugosc_ilosc_odcinkow = models.IntegerField() # NOQA
     Opis = models.CharField(max_length=1000) # NOQA
     Data_premiery = models.DateField() # NOQA
-    ID_Uzytkownika = models.ForeignKey(Kategorie, on_delete=models.CASCADE) # NOQA
+    ID_Kategorii = models.ForeignKey(Kategorie, on_delete=models.CASCADE) # NOQA
 
     def __str__(self):
         return self.Tytul
