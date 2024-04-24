@@ -5,4 +5,5 @@ from mainapp import views
 urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
     path('admin/', admin.site.urls),
+    path('RSWTA/', views.BaseView.as_view(), name='RSWTA')
 ]

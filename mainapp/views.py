@@ -7,3 +7,7 @@ from django.views import generic
 
 class HomeView(generic.base.TemplateView):
     template_name = "home.html"
+
+
+class BaseView(generic.base.TemplateView):
+    template_name = "base.html"
