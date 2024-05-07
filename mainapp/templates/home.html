@@ -9,6 +9,10 @@
             padding: 0;
         }
 
+        body {
+            background-color: darkslategrey;
+        }
+
         .item {
             margin: 20px;
             text-align: center;
@@ -60,13 +64,10 @@
 <body>
     <div class="search-bar">
         <select>
-            <option>wszystkie/brak zależy co lepiej brzmi </option>
-            <option>kategoria 1</option>
-            <option>kategoria 2</option>
-            <option>kategoria 3</option>
-            <option>kategoria 4</option>
-            <option>kategoria 5</option>
-            <option>kategoria 6</option>
+            <option>wszystkie</option>
+            {% for kat in kategorie %}
+            <option>{{ kat.Nazwa }}</option>
+            {% endfor %}
         </select>
         <input placeholder="szukanie whatever"></input>
         <input type="button" value="szukaj">
