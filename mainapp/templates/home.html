@@ -1,67 +1,8 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <title>main site</title>
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: darkslategrey;
-        }
-
-        .item {
-            margin: 20px;
-            text-align: center;
-            float: left;
-            width: 20vw;
-            height: 32vh;
-            background-color: turquoise;
-            color: black;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .item * {
-            padding: 3px;
-        }
-
-        .item > .idk {
-            height: 100px;
-            width: 100px;
-            background-color: black;
-            margin: 10px auto 10px auto;
-            color: white;
-            vertical-align: center;
-        }
-
-        .item > span {
-            display: inline-block;
-        }
-
-        .item > .opis {
-            height: 3.5vh;
-            width: 15vw;
-            background-color: darkblue;
-            color: white;
-            overflow: hidden;
-            padding: 7px;
-        }
-
-        .item > .opis:hover {
-            overflow: auto;
-            height: auto;
-        }
-
-        .search-bar {
-            padding: 10px;
-        }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}
+   main site
+{% endblock %}
+{% block content %}
     <div class="search-bar">
         <form method="get">
             <select name="kategoria">
@@ -84,5 +25,4 @@
         <span class="opis">{{film.Opis}}</span>
     </div>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
