@@ -6,6 +6,9 @@ class Kategorie(models.Model): # NOQA
         verbose_name_plural = 'Kategorie'
     Nazwa = models.TextField() # NOQA
 
+    def __str__(self):
+        return self.Nazwa
+
 
 class Produkcje(models.Model): # NOQA
     class Meta:

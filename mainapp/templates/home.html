@@ -63,14 +63,16 @@
 </head>
 <body>
     <div class="search-bar">
-        <select>
-            <option>wszystkie</option>
-            {% for kat in kategorie %}
-            <option>{{ kat.Nazwa }}</option>
-            {% endfor %}
-        </select>
-        <input placeholder="szukanie whatever"></input>
-        <input type="button" value="szukaj">
+        <form method="get">
+            <select name="kategoria">
+                <option value="">wszystkie</option>
+                {% for kat in kategorie %}
+                <option value="{{ kat.id }}">{{ kat.Nazwa }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="fraza" placeholder="Szukaj filmu..."></input>
+            <input type="submit" value="szukaj">
+        </form>
     </div>
     {% for film in filmy %}
     <div class="item">
