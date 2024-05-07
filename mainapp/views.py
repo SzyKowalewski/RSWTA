@@ -6,10 +6,6 @@ from django.views import generic
 from .models import Produkcje, Kategorie
 
 
-# class HomeView(generic.base.TemplateView):
-#    template_name = "home.html"
-
-
 def widok_home(request):
     kategorie = Kategorie.objects.all()
     filmy = Produkcje.objects.all()
