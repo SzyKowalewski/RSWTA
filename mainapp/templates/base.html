@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <style>
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
         header, footer {
             padding: 10px;
             text-align: center;
@@ -23,6 +28,7 @@
         *{
             margin: 0;
             padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         body {
@@ -45,11 +51,11 @@
             padding: 3px;
         }
 
-        .item > .idk {
+        .idk {
             height: 100px;
             width: 100px;
-            background-color: black;
             margin: 10px auto 10px auto;
+            background-color: black;
             color: white;
             vertical-align: center;
         }
@@ -80,8 +86,10 @@
 </head>
 <body>
 <header>
+    <a href="/">
     <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c0/Poisonous_Potato_JE3_BE2.png/revision/latest?cb=20200521233152" alt="" srcset="" style="height: 40px;">
     rotten potatoes INC.
+    </a>
 </header>
 {% block content %}
 {% endblock %}

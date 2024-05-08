@@ -16,13 +16,15 @@
         </form>
     </div>
     {% for film in filmy %}
-    <div class="item">
-        <div class="idk">miejsce na zdjęcie, jak się zdecydujemy dodać</div>
-        <h2>{{ film.Tytul }}</h2>
-        <h4>{{ film.ID_Kategorii }}</h4>
-        <h3>{{ film.Rezyser }}</h3>
-        <span>{{ film.Dlugosc_ilosc_odcinkow}}</span> <br />
-        <span class="opis">{{film.Opis}}</span>
-    </div>
+    <a href="/info/">
+        <div class="item">
+            <div class="idk">miejsce na zdjęcie, jak się zdecydujemy dodać</div>
+            <h2>{{ film.Tytul }}</h2>
+            <h4>{{ film.ID_Kategorii }}</h4>
+            <h3>{{ film.Rezyser }}</h3>
+            <span>{{ film.Dlugosc_ilosc_odcinkow}}</span> <br />
+            <span class="opis">{{film.Opis}}</span>
+        </div>
+    </a>
     {% endfor %}
 {% endblock %}

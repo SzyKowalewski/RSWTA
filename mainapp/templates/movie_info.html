@@ -1,0 +1,85 @@
+<head>
+    <style>
+        #wrapper {
+            margin: 20px;
+            background-color: darkblue;
+            height: 82vh;
+            width: 34vw;
+            float: left;
+            overflow-y: scroll;
+            scrollbar-width: none;
+        }
+
+        .info {
+            margin: 20px;
+            float: left;
+            width: 60vw;
+            height: 82vh;
+            background-color: turquoise;
+            color: black;
+        }
+
+        .cepibula {
+            margin: 20px;
+            background-color: indigo;
+            color: white;
+            border-radius: 15px;
+            padding: 10px;
+            height: 18vh;
+        }
+
+        .cepibula > .user {
+            float: left;
+        }
+
+        .cepibula > .rate {
+            font-size: larger;
+            float: right;
+        }
+
+        .cepibula > .comment {
+            clear: both;
+            padding-top: 10px;
+        }
+
+        .opis {
+            float: left;
+            padding: 7px;
+        }
+    </style>
+</head>
+{% extends "base.html" %}
+{% block title %}
+   informacje o filmie czy ki chuj
+{% endblock %}
+
+{% block content %}
+<div class="info">
+    {% for film in filmy %}{% if film.id == 1 %}
+        <div style="text-align: center"><h1 style="color: green; background-color: white">
+            {{ film.Tytul }}
+
+        </h1></div>
+        <div class="idk" style="height: 400px; width: 400px; margin: 10px; float: left">znowu miejsce na zdjęcie, tym razem większe</div>
+        <div class="opis"> Reżyser/reżyserzy: {{ film.Rezyser }} </div><br/><br/><br/>
+        <div class="opis"> Kategoria: {{ film.ID_Kategorii_id }} </div><br/><br/><br/>
+        <div class="opis"> Długość: {{ film.Dlugosc_ilosc_odcinkow }} </div>
+        <div class="opis" style="clear: both; text-align: center"> Opis: {{ film.Opis }} </div>
+    {% endif %}{% endfor %}
+</div>
+<div id="wrapper">
+{% for opn in opinie %}
+    <div class="cepibula">
+        {% if opn.ID_Produkcji_id == 1 %}
+            {% for u in uzytkownicy %}
+                {% if opn.ID_Uzytkownika_id == u.id %}
+                    <div class="user"><h2>{{ u.Nazwa_Uzytkownika }}</h2></div>
+                {% endif %}
+            {% endfor %}
+            <div class="rate">{{ opn.Ocena }}/10</div>
+            <div class="comment">{{ opn.Komentarz }}</div>
+        {% endif %}
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
