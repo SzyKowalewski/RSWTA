@@ -9,7 +9,6 @@ from django.db.models import Q
 from django.contrib.auth import authenticate, login
 
 
-
 def widok_home(request):
     kategorie = Kategorie.objects.all()
     filmy = Produkcje.objects.all()

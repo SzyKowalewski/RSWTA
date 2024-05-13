@@ -12,12 +12,18 @@
 </head>
 <body>
 <header>
-    <a href="/">
+    <a href="/" style="float: left">
     <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c0/Poisonous_Potato_JE3_BE2.png/revision/latest?cb=20200521233152" alt="" srcset="" style="height: 40px;">
     rotten potatoes INC.
     </a>
-    <a href="/login" class="button">Zaloguj się</a>
-    <a href="/register" class="button">Zarejestruj się</a>
+
+    {% if user %}
+        <a href="/" class="button">Wyloguj się</a>
+    {% else %}
+        <a href="/login" class="button">Zaloguj się</a>
+        <a href="/register" class="button">Zarejestruj się</a>
+    {% endif %}
+
 </header>
 {% block content %}
 {% endblock %}
