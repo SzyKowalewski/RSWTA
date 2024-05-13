@@ -13,11 +13,12 @@
 {% endblock %}
 {% block content %}
 <div class="login_menu">
-   <form action="">
-      <label>E-mail: <br /><input type="text"></label> <br /><br />
-      <label>Hasło: <br /><input type="password"></label> <br /><br />
-      <label>Nazwa użytkownika: <br /><input type="text"></label> <br /><br />
-      <input type="button" value="Zarejestruj się">
+   <form method="POST">
+      <label>E-mail: <br /><input type="text" name="email"></label> <br /><br />
+      <label>Hasło: <br /><input type="password" name="password"></label> <br /><br />
+      <label>Nazwa użytkownika: <br /><input type="text" name="username"></label> <br /><br />
+      <input type="submit" value="Zarejestruj się">
+       {%  csrf_token %}
    </form>
 </div>
 {% endblock %}

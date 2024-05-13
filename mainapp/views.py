@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.shortcuts import render, redirect
@@ -30,6 +31,16 @@ def details_view(request):
     opinie = Rezencje.objects.all()
     uzytkownicy = Uzytkownicy.objects.all()
 
+    if request.method == 'POST':
+        score = request.POST['score']
+        comment = request.POST['comment']
+        id_produkcji = request.POST['id_produkcji']
+        id_uzytkownika = request.POST['id_uzytkownika']
+
+        review = Rezencje.objects.create(Ocena=score, Komentarz=comment, id_produkcji = id_produkcji, id_uzytkownika=id_uzytkownika)
+        review.save()
+        return redirect('/')
+
     return render(request, 'movie_info.html', {'filmy': filmy, 'opinie': opinie, 'uzytkownicy': uzytkownicy})
 
 
@@ -51,8 +62,15 @@ def login_view(request):
 
 
 def register_view(request):
-
-    return render(request, 'register.html')
+    if request.method == "POST":
+        email = request.POST['email']
+        username = request.POST['username']
+        password = request.POST['password']
+        uzytkownicy = Uzytkownicy.objects.create(Nazwa_Uzytkownika=username, E_mail=email, Haslo=password, Publiczne=False)
+        uzytkownicy.save()
+        return redirect('/')
+    else:
+        return render(request, 'register.html')
 
 
 class BaseView(generic.base.TemplateView):
