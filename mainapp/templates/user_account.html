@@ -3,6 +3,17 @@
    User
 {% endblock %}
 {% block content %}
-<h2>{{user.Nazwa_Uzytkownika}}</h2>
+<style>
+    input[type=checkbox] {
+    transform: scale(1.5);
+}
+</style>
+<div style="margin: 20px; color: white;">
+    <h2>{{user.Nazwa_Uzytkownika}}</h2>
     <h2>{{user.E_mail}}</h2>
+    <h2>Dane publiczne:
+        {% if user.Publiczne %} <input type="checkbox" checked disabled> {% else %}
+        <input type="checkbox" disabled> {% endif %}
+    </h2>
+</div>
 {% endblock %}
