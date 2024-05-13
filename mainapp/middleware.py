@@ -9,10 +9,10 @@ class UserMiddleware:
         user_id = request.session.get('user_id')
         if user_id:
             try:
-                request.user = Uzytkownicy.objects.get(pk=user_id)
+                user = Uzytkownicy.objects.get(pk=user_id)
+                request.user = user
             except Uzytkownicy.DoesNotExist:
-                request.user = None
-        else:
-            request.user = None
+                pass
+
         response = self.get_response(request)
         return response
