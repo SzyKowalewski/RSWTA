@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.shortcuts import render, redirect
@@ -21,12 +20,9 @@ def widok_home(request):
 
     if wpisana_fraza:
         filmy = filmy.filter(Q(Tytul__icontains=wpisana_fraza) | Q(Rezyser__icontains=wpisana_fraza))
-    user_id = request.session.get('user_id')
-    if user_id:
-        user = Uzytkownicy.objects.get(pk=user_id)
-        return render(request, 'home.html', {'filmy': filmy, 'kategorie': kategorie, 'user': user})
-    else:
-        return render(request, 'home.html', {'filmy': filmy, 'kategorie': kategorie, 'user': None})
+
+    user = request.user  # Pobieramy użytkownika z requestu
+    return render(request, 'home.html', {'filmy': filmy, 'kategorie': kategorie, 'user': user})
 
 
 def details_view(request):
@@ -40,11 +36,12 @@ def details_view(request):
         id_produkcji = request.POST['id_produkcji']
         id_uzytkownika = request.POST['id_uzytkownika']
 
-        review = Rezencje.objects.create(Ocena=score, Komentarz=comment, id_produkcji = id_produkcji, id_uzytkownika=id_uzytkownika)
+        review = Rezencje.objects.create(Ocena=score, Komentarz=comment, id_produkcji=id_produkcji, id_uzytkownika=id_uzytkownika)
         review.save()
         return redirect('/')
 
-    return render(request, 'movie_info.html', {'filmy': filmy, 'opinie': opinie, 'uzytkownicy': uzytkownicy})
+    user = request.user  # Pobieramy użytkownika z requestu
+    return render(request, 'movie_info.html', {'filmy': filmy, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user})
 
 
 def login_view(request):
@@ -77,7 +74,8 @@ def register_view(request):
 
 
 def user_account_view(request):
-    return render(request, 'user_account.html')
+    user = request.user  # Pobieramy użytkownika z requestu
+    return render(request, 'user_account.html', {'user': user})
 
 
 def logout_view(request):
