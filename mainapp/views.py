@@ -75,9 +75,15 @@ def register_view(request):
     else:
         return render(request, 'register.html')
 
+
+def user_account_view(request):
+    return render(request, 'user_account.html')
+
+
 def logout_view(request):
     logout(request)
     return redirect('home')
+
 
 class BaseView(generic.base.TemplateView):
     template_name = "base.html"

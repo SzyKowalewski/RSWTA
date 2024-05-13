@@ -1,15 +1,6 @@
-<style>
-   .login_menu {
-      padding: 20px;
-      background-color: white;
-      margin: 100px;
-      font-size: 1.5em;
-      width: 40vw;
-   }
-</style>
 {% extends "base.html" %}
 {% block title %}
-   main site
+   Register new user
 {% endblock %}
 {% block content %}
 <div class="login_menu">
@@ -18,7 +9,7 @@
       <label>Hasło: <br /><input type="password" name="password"></label> <br /><br />
       <label>Nazwa użytkownika: <br /><input type="text" name="username"></label> <br /><br />
       <input type="submit" value="Zarejestruj się">
-       {%  csrf_token %}
+       {% csrf_token %}
    </form>
 </div>
 {% endblock %}

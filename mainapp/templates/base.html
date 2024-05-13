@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/base.css">
     <link rel="stylesheet" href="../static/home.css">
     <link rel="stylesheet" href="../static/movie_info.css">
+    <link rel="stylesheet" href="../static/login_register.css">
 </head>
 <body>
 <header>
@@ -17,14 +18,18 @@
     rotten potatoes INC.
     </a>
 
-    {% if user %}
-        <a href="{% url 'logout' %}">Wyloguj się</a>
-    {% else %}
+    {% if user.id is None %}
         <a href="/login" class="button">Zaloguj się</a>
         <a href="/register" class="button">Zarejestruj się</a>
+    {% else %}
+        <a href="{% url 'logout' %}" class="button">Wyloguj się</a>
+        <a href="/user" class="button">Wyświetl swoje konto</a>
     {% endif %}
 
 </header>
+{% if user %}
+    <p>Witaj użytkowniku o ID {{ user.id }}!</p>
+{% endif %}
 {% block content %}
 {% endblock %}
 <footer>
