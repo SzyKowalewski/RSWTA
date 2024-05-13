@@ -1,0 +1,46 @@
+#wrapper {
+    margin: 20px;
+    background-color: darkblue;
+    height: 82vh;
+    width: 34vw;
+    float: left;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.info {
+    margin: 20px;
+    float: left;
+    width: 60vw;
+    height: 82vh;
+    background-color: turquoise;
+    color: black;
+}
+
+.cepibula {
+    margin: 20px;
+    background-color: indigo;
+    color: white;
+    border-radius: 15px;
+    padding: 10px;
+    height: 18vh;
+}
+
+.cepibula > .user {
+    float: left;
+}
+
+.cepibula > .rate {
+    font-size: larger;
+    float: right;
+}
+
+.cepibula > .comment {
+    clear: both;
+    padding-top: 10px;
+}
+
+.opis {
+    float: left;
+    padding: 7px;
+}
