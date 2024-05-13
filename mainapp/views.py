@@ -1,10 +1,12 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from .models import Produkcje, Kategorie, Rezencje, Uzytkownicy
 from django.db.models import Q
+from django.contrib.auth import authenticate, login
+
 
 
 def widok_home(request):
@@ -32,8 +34,20 @@ def details_view(request):
 
 
 def login_view(request):
-
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        try:
+            user = Uzytkownicy.objects.get(E_mail=email)
+        except Uzytkownicy.DoesNotExist:
+            user = None
+        if user is not None and user.Haslo == password:
+            request.session['user_id'] = user.id
+            return redirect('home')
+        else:
+            return render(request, 'login.html', {'error': 'Nieprawidłowe dane logowania'})
+    else:
+        return render(request, 'login.html')
 
 
 def register_view(request):
