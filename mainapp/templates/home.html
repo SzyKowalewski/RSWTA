@@ -16,7 +16,7 @@
         </form>
     </div>
     {% for film in filmy %}
-    <a href="/info/">
+    <a href="/info/{{ film.id }}/">
         <div class="item">
             <div class="photo">miejsce na zdjęcie, jak się zdecydujemy dodać</div>
             <h2>{{ film.Tytul }}</h2>

@@ -1,35 +1,32 @@
 {% extends "base.html" %}
 {% block title %}
-   informacje o filmie czy ki chuj
+   informacje o filmie
 {% endblock %}
 {% block content %}
-<style>
-</style>
 <div class="info">
-    {% for film in filmy %}{% if film.id == 1 %}
-        <div style="text-align: center"><h1 style="color: green; background-color: white">
-            {{ film.Tytul }}
-
-        </h1></div>
-        <div class="idk" style="height: 400px; width: 400px; margin: 10px; float: left">znowu miejsce na zdjęcie, tym razem większe</div>
-        <div class="opis"> Reżyser/reżyserzy: {{ film.Rezyser }} </div><br/><br/><br/>
-        <div class="opis"> Kategoria: {{ film.ID_Kategorii_id }} </div><br/><br/><br/>
-        <div class="opis"> Długość: {{ film.Dlugosc_ilosc_odcinkow }} </div>
-        <div class="opis" style="clear: both; text-align: center"> Opis: {{ film.Opis }} </div>
-    {% endif %}{% endfor %}
+    <div style="text-align: center">
+        <h1 style="color: green; background-color: white">{{ film.Tytul }}</h1>
+    </div>
+    <div class="idk" style="height: 400px; width: 400px; margin: 10px; float: left">znowu miejsce na zdjęcie, tym razem większe</div>
+    <div class="opis">Reżyser/reżyserzy: {{ film.Rezyser }}</div><br/><br/><br/>
+    <div class="opis">Kategoria: {{ film.ID_Kategorii_id }}</div><br/><br/><br/>
+    <div class="opis">Długość: {{ film.Dlugosc_ilosc_odcinkow }}</div>
+    <div class="opis" style="clear: both; text-align: center">Opis: {{ film.Opis }}</div>
 </div>
 <div id="wrapper">
     <div id="opinion_popup" style="display: none">
-        <form action="" method="">
-            <label>Ocena: <input type="number" name="" /></label><br /><br />
-            <label>Komentarz:<br /><textarea name=""></textarea></label><br /><br />
-            <input type="button" value="Dodaj opinię">
+        <form action="" method="POST">
+            <label>Ocena: <input type="number" name="score" /></label><br /><br />
+            <label>Komentarz:<br /><textarea name="comment"></textarea></label><br /><br />
+            <input type="hidden" name="id_uzytkownika" value="{{ user.id }}" />
+            <input type="hidden" name="id_produkcji" value="{{ film.id }}" />
+            <input type="submit" value="Dodaj opinię">
+            {% csrf_token %}
         </form>
     </div>
     <div style="margin: 20px; cursor: pointer; width: fit-content" class="button" onclick="popup()">Dodaj opinię</div>
-{% for opn in opinie %}
-    <div class="cepibula">
-        {% if opn.ID_Produkcji_id == 1 %}
+    {% for opn in opinie %}
+        <div class="cepibula">
             {% for u in uzytkownicy %}
                 {% if opn.ID_Uzytkownika_id == u.id %}
                     <div class="user"><h2>{{ u.Nazwa_Uzytkownika }}</h2></div>
@@ -37,9 +34,8 @@
             {% endfor %}
             <div class="rate">{{ opn.Ocena }}/10</div>
             <div class="comment">{{ opn.Komentarz }}</div>
-        {% endif %}
-    </div>
-{% endfor %}
+        </div>
+    {% endfor %}
 </div>
 <script>
     let visible = false;

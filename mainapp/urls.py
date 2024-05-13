@@ -6,7 +6,7 @@ from .views import widok_home, details_view, login_view, register_view, user_acc
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", widok_home, name="home"),
-    path("info/", details_view, name="movie_info"),
+    path("info/<int:film_id>/", details_view, name="movie_info"),
     path('login/', login_view, name="login"),
     path('register/', register_view, name="register"),
     path('user/', user_account_view, name="user"),

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 
 # Create your views here.
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from .models import Produkcje, Kategorie, Rezencje, Uzytkownicy
 from django.db.models import Q
@@ -25,9 +25,9 @@ def widok_home(request):
     return render(request, 'home.html', {'filmy': filmy, 'kategorie': kategorie, 'user': user})
 
 
-def details_view(request):
-    filmy = Produkcje.objects.all()
-    opinie = Rezencje.objects.all()
+def details_view(request, film_id):
+    film = get_object_or_404(Produkcje, id=film_id)
+    opinie = Rezencje.objects.filter(ID_Produkcji_id=film_id)
     uzytkownicy = Uzytkownicy.objects.all()
 
     if request.method == 'POST':
@@ -36,12 +36,12 @@ def details_view(request):
         id_produkcji = request.POST['id_produkcji']
         id_uzytkownika = request.POST['id_uzytkownika']
 
-        review = Rezencje.objects.create(Ocena=score, Komentarz=comment, id_produkcji=id_produkcji, id_uzytkownika=id_uzytkownika)
+        review = Rezencje.objects.create(Ocena=score, Komentarz=comment, ID_Produkcji_id=id_produkcji, ID_Uzytkownika_id=id_uzytkownika)
         review.save()
-        return redirect('/')
+        return redirect(f'/info/{film_id}/')
 
     user = request.user  # Pobieramy użytkownika z requestu
-    return render(request, 'movie_info.html', {'filmy': filmy, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user})
+    return render(request, 'movie_info.html', {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user})
 
 
 def login_view(request):

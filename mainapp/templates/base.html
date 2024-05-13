@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <style>
 
     </style>
-    <link rel="stylesheet" href="../static/base.css">
-    <link rel="stylesheet" href="../static/home.css">
-    <link rel="stylesheet" href="../static/movie_info.css">
-    <link rel="stylesheet" href="../static/login_register.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'movie_info.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'login_register.css' %}">
 </head>
 <body>
 <header>
@@ -27,9 +28,9 @@
     {% endif %}
 
 </header>
-{% if user %}
+<!--{% if user %}
     <p>Witaj użytkowniku o ID {{ user.id }}!</p>
-{% endif %}
+{% endif %}-->
 {% block content %}
 {% endblock %}
 <footer>
