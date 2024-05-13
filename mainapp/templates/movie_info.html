@@ -2,8 +2,9 @@
 {% block title %}
    informacje o filmie czy ki chuj
 {% endblock %}
-
 {% block content %}
+<style>
+</style>
 <div class="info">
     {% for film in filmy %}{% if film.id == 1 %}
         <div style="text-align: center"><h1 style="color: green; background-color: white">
@@ -18,6 +19,14 @@
     {% endif %}{% endfor %}
 </div>
 <div id="wrapper">
+    <div id="opinion_popup" style="display: none">
+        <form action="" method="">
+            <label>Ocena: <input type="number" name="" /></label><br /><br />
+            <label>Komentarz:<br /><textarea name=""></textarea></label><br /><br />
+            <input type="button" value="Dodaj opinię">
+        </form>
+    </div>
+    <div style="margin: 20px; cursor: pointer; width: fit-content" class="button" onclick="popup()">Dodaj opinię</div>
 {% for opn in opinie %}
     <div class="cepibula">
         {% if opn.ID_Produkcji_id == 1 %}
@@ -32,4 +41,17 @@
     </div>
 {% endfor %}
 </div>
+<script>
+    let visible = false;
+    function popup(){
+        if(!visible){
+            visible = true;
+            document.getElementById("opinion_popup").style.display = "";
+        }
+        else{
+            visible = false;
+            document.getElementById("opinion_popup").style.display = "none";
+        }
+    }
+</script>
 {% endblock %}

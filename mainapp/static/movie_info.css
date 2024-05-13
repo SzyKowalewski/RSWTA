@@ -1,4 +1,5 @@
 #wrapper {
+    position: relative;
     margin: 20px;
     background-color: darkblue;
     height: 82vh;
@@ -43,4 +44,29 @@
 .opis {
     float: left;
     padding: 7px;
+}
+
+#opinion_popup {
+    padding: 20px;
+    position: absolute;
+    background-color: darkgreen;
+    height: 200px;
+    left: 145px;
+    top: 20px;
+}
+
+#opinion_popup textarea {
+    height: 100px;
+    width: 350px;
+    resize: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
 }
