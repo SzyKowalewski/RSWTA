@@ -22,8 +22,12 @@ def widok_home(request):
 
     if wpisana_fraza:
         filmy = filmy.filter(Q(Tytul__icontains=wpisana_fraza) | Q(Rezyser__icontains=wpisana_fraza))
-
-    return render(request, 'home.html', {'filmy': filmy, 'kategorie': kategorie})
+    user_id = request.session.get('user_id')
+    if user_id:
+        user = Uzytkownicy.objects.get(pk=user_id)
+        return render(request, 'home.html', {'filmy': filmy, 'kategorie': kategorie, 'user': user})
+    else:
+        return render(request, 'home.html', {'filmy': filmy, 'kategorie': kategorie, 'user': None})
 
 
 def details_view(request):
