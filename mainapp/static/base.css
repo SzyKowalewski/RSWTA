@@ -23,3 +23,21 @@ footer {
     position: absolute;
     bottom: 0;
 }
+
+.button {
+    background-color: rgb(60,60,60);
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: rgb(80,80,80);
+    color: black;
+}
+
+header > .button {
+    float: right;
+    font-size: medium;
+    margin: 7px;
+    right: 10px;
+}

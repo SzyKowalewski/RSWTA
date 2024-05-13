@@ -31,5 +31,15 @@ def details_view(request):
     return render(request, 'movie_info.html', {'filmy': filmy, 'opinie': opinie, 'uzytkownicy': uzytkownicy})
 
 
+def login_view(request):
+
+    return render(request, 'login.html')
+
+
+def register_view(request):
+
+    return render(request, 'register.html')
+
+
 class BaseView(generic.base.TemplateView):
     template_name = "base.html"
