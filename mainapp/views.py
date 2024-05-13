@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from .models import Produkcje, Kategorie, Rezencje, Uzytkownicy
 from django.db.models import Q
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 
 
 def widok_home(request):
@@ -75,6 +75,9 @@ def register_view(request):
     else:
         return render(request, 'register.html')
 
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 class BaseView(generic.base.TemplateView):
     template_name = "base.html"

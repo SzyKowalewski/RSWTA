@@ -18,7 +18,7 @@
     </a>
 
     {% if user %}
-        <a href="/" class="button">Wyloguj się</a>
+        <a href="{% url 'logout' %}">Wyloguj się</a>
     {% else %}
         <a href="/login" class="button">Zaloguj się</a>
         <a href="/register" class="button">Zarejestruj się</a>
