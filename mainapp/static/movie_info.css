@@ -1,7 +1,7 @@
 #wrapper {
     position: relative;
     margin: 20px;
-    background-color: darkblue;
+    background-color: var(--primary-dark);
     height: 82vh;
     width: 34vw;
     float: left;
@@ -9,19 +9,24 @@
     scrollbar-width: none;
 }
 
+#wrapper h1 {
+    background-color: var(--secondary-dark);
+    color: var(--secondary-content);
+}
+
 .info {
     margin: 20px;
     float: left;
     width: 60vw;
     height: 82vh;
-    background-color: turquoise;
-    color: black;
+    background-color: var(--secondary);
+    color: var(--secondary-content);
 }
 
 .cepibula {
     margin: 20px;
-    background-color: indigo;
-    color: white;
+    background-color: var(--secondary-dark);
+    color: var(--secondary-content);
     border-radius: 15px;
     padding: 10px;
     height: 18vh;
@@ -44,12 +49,14 @@
 .opis {
     float: left;
     padding: 7px;
+    color: var(--primary-content);
 }
 
 #opinion_popup {
     padding: 20px;
     position: absolute;
-    background-color: darkgreen;
+    background-color: var(--success);
+    color: var(--success-content);
     height: 200px;
     left: 100px;
     top: 20px;

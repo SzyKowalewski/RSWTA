@@ -1,0 +1,26 @@
+:root{
+    --primary: #0000bf;
+    --primary-content: #bfbfff;
+    --primary-dark: #00008c;
+    --primary-light: #0000f2;
+
+    --secondary: #7f00bf;
+    --secondary-content: #eabfff;
+    --secondary-dark: #5d008c;
+    --secondary-light: #a100f2;
+
+    --background: #111122;
+    --foreground: #191934;
+    --border: #292956;
+
+    --copy: #fafafd;
+    --copy-light: #cbcbe6;
+    --copy-lighter: #8787c5;
+
+    --success: #00bf00;
+    --warning: #bfbf00;
+    --error: #bf0000;
+    --success-content: #bfffbf;
+    --warning-content: #000000;
+    --error-content: #ffbfbf;
+}

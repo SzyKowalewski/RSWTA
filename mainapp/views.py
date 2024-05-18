@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.http import Http404
 
 # Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
@@ -66,16 +67,33 @@ def register_view(request):
         email = request.POST['email']
         username = request.POST['username']
         password = request.POST['password']
-        uzytkownicy = Uzytkownicy.objects.create(Nazwa_Uzytkownika=username, E_mail=email, Haslo=password, Publiczne=False)
-        uzytkownicy.save()
-        return redirect('/')
+        password_2 = request.POST['password_2']
+        if password == password_2:
+            uzytkownicy = Uzytkownicy.objects.create(Nazwa_Uzytkownika=username, E_mail=email, Haslo=password, Publiczne=False)
+            uzytkownicy.save()
+            return redirect('/login')
+        else:
+            return redirect('/register')
     else:
         return render(request, 'register.html')
 
 
-def user_account_view(request):
+def logged_user_account_view(request):
     user = request.user  # Pobieramy użytkownika z requestu
-    return render(request, 'user_account.html', {'user': user})
+    if user.id is not None:
+        return render(request, 'my_account.html', {'user': user})
+    else:
+        return redirect('/login')
+
+
+def user_account_view(request, user_id):
+    try:
+        user = get_object_or_404(Uzytkownicy, id=user_id)
+    except Http404:
+        return redirect('/')
+    else:
+        return render(request, 'user_account.html', {'user': user})
+        
 
 
 def logout_view(request):

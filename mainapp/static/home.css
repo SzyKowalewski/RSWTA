@@ -1,5 +1,5 @@
 body {
-    background-color: darkslategrey;
+    background-color: var(--background);
 }
 
 .item {
@@ -8,8 +8,8 @@ body {
     float: left;
     width: 20vw;
     height: 32vh;
-    background-color: turquoise;
-    color: black;
+    background-color: var(--secondary);
+    color: var(--secondary-content);
     border-radius: 5px;
     cursor: pointer;
 }
@@ -21,9 +21,9 @@ body {
 .photo {
     height: 100px;
     width: 100px;
-    margin: 10px auto 10px auto;
-    background-color: black;
-    color: white;
+    margin: 10px auto;
+    background-color: var(--foreground);
+    color: var(--copy);
     vertical-align: center;
 }
 
@@ -34,8 +34,8 @@ body {
 .item > .home_desc {
     max-height: 3.5vh;
     width: 15vw;
-    background-color: darkblue;
-    color: white;
+    background-color: var(--primary-dark);
+    color: var(--primary-content);
     overflow: hidden;
     padding: 7px;
 }
@@ -47,4 +47,5 @@ body {
 
 .search-bar {
     padding: 10px;
+    color: var(--copy);
 }

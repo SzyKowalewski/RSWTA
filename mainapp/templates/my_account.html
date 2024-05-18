@@ -11,8 +11,9 @@
 <div style="margin: 20px; color: white;">
     <h2>{{user.Nazwa_Uzytkownika}}</h2>
     <h2>{{user.E_mail}}</h2>
-    <h2>{% if user.Publiczne %} tu będą kiedyś przyciski do wyświetlenia list danego użytkownika {% else %}
-        Ten użytkownik nie udostępnia swoich danych publicznie :< {% endif %}
+    <h2>Dane publiczne:
+        {% if user.Publiczne %} <input type="checkbox" checked disabled> {% else %}
+        <input type="checkbox" disabled> {% endif %}
     </h2>
 </div>
 {% endblock %}
