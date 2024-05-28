@@ -4,7 +4,7 @@ from django.http import Http404
 # Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
-from .models import Produkcje, Kategorie, Rezencje, Uzytkownicy
+from .models import Produkcje, Kategorie, Rezencje, Uzytkownicy, Do_obejrzenia, Obejrzane
 from django.db.models import Q
 from django.contrib.auth import logout
 
@@ -113,6 +113,25 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
+
+def add_to_watchlist(request, film_id):
+    if request.method == 'POST':
+        user_id = request.POST['user_id']
+        user = get_object_or_404(Uzytkownicy, id=user_id)
+        film = get_object_or_404(Produkcje, id=film_id)
+
+        Do_obejrzenia.objects.create(ID_Produkcji=film, ID_Uzytkownika=user)
+        return redirect('movie_info', film_id=film.id)
+
+
+def add_to_watchedlist(request, film_id):
+    if request.method == 'POST':
+        user_id = request.POST['user_id']
+        user = get_object_or_404(Uzytkownicy, id=user_id)
+        film = get_object_or_404(Produkcje, id=film_id)
+
+        Obejrzane.objects.create(ID_Produkcji=film, ID_Uzytkownika=user)
+        return redirect('movie_info', film_id=film.id)
 
 class BaseView(generic.base.TemplateView):
     template_name = "base.html"

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from mainapp import views
-from .views import widok_home, details_view, login_view, register_view, logged_user_account_view, user_account_view
+from .views import widok_home, details_view, login_view, register_view, logged_user_account_view, user_account_view, add_to_watchlist, add_to_watchedlist
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -15,6 +15,8 @@ urlpatterns = [
     path('user/<int:user_id>/', user_account_view, name="user"),
     path('RSWTA/', views.BaseView.as_view(), name='RSWTA'),  # imo już można wyjebać, bo mamy podpięty base do reszty
     path('logout/', views.logout_view, name='logout'),
+    path('add_to_watchlist/<int:film_id>/', add_to_watchlist, name='add_to_watchlist'),
+    path('add_to_watchedlist/<int:film_id>/', add_to_watchedlist, name='add_to_watchedlist'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

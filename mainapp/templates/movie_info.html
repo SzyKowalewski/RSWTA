@@ -19,6 +19,24 @@
     <div class="opis">Długość: {{ film.Dlugosc_ilosc_odcinkow }}</div>
     <div class="opis" style="clear: both; text-align: center">Opis: {{ film.Opis }}</div>
 </div>
+    
+    {% if user.id is not None %}
+        <form method="POST" action="{% url 'add_to_watchlist' film.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <input type="hidden" name="film_id" value="{{ film.id }}">
+            <button type="submit">Dodaj do listy "Do obejrzenia"</button>
+        </form>
+
+        <form method="POST" action="{% url 'add_to_watchedlist' film.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <input type="hidden" name="film_id" value="{{ film.id }}">
+            <button type="submit">Dodaj do listy "Obejrzane"</button>
+        </form>
+    {% endif %}
+</div>
+    
 <div id="wrapper">
     <div id="opinion_popup" style="display: none">
         <form action="" method="POST">
