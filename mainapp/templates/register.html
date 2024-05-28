@@ -5,12 +5,15 @@
 {% block content %}
 <div class="login_menu">
    <form method="POST">
-      <label>E-mail: <br /><input type="text" name="email"></label> <br /><br />
-      <label>Hasło: <br /><input type="password" name="password"></label> <br /><br />
-      <label>Potwierdź hasło: <br /><input type="password" name="password_2"></label> <br /><br />
-      <label>Nazwa użytkownika: <br /><input type="text" name="username"></label> <br /><br />
+      <label>E-mail: <br /><input type="text" name="email" autocomplete="off"></label> <br /><br />
+      <label>Hasło: <br /><input type="password" name="password" autocomplete="off"></label> <br /><br />
+      <label>Potwierdź hasło: <br /><input type="password" name="password_2" autocomplete="off"></label> <br /><br />
+      <label>Nazwa użytkownika: <br /><input type="text" name="username" autocomplete="off"></label> <br /><br />
       <input type="submit" value="Zarejestruj się">
       {% csrf_token %}
    </form>
+   {% if error is not None %}
+   <br /><span class="error">{{error}}</span>
+   {% endif %}
 </div>
 {% endblock %}

@@ -27,22 +27,26 @@ def widok_home(request):
 
 
 def details_view(request, film_id):
-    film = get_object_or_404(Produkcje, id=film_id)
-    opinie = Rezencje.objects.filter(ID_Produkcji_id=film_id)
-    uzytkownicy = Uzytkownicy.objects.all()
+    try:
+        film = get_object_or_404(Produkcje, id=film_id)
+    except Http404:
+        return render(request, 'missing_data.html', {'data': "film"})
+    else:
+        opinie = Rezencje.objects.filter(ID_Produkcji_id=film_id)
+        uzytkownicy = Uzytkownicy.objects.all()
 
-    if request.method == 'POST':
-        score = request.POST['score']
-        comment = request.POST['comment']
-        id_produkcji = request.POST['id_produkcji']
-        id_uzytkownika = request.POST['id_uzytkownika']
+        if request.method == 'POST':
+            score = request.POST['score']
+            comment = request.POST['comment']
+            id_produkcji = request.POST['id_produkcji']
+            id_uzytkownika = request.POST['id_uzytkownika']
 
-        review = Rezencje.objects.create(Ocena=score, Komentarz=comment, ID_Produkcji_id=id_produkcji, ID_Uzytkownika_id=id_uzytkownika)
-        review.save()
-        return redirect(f'/info/{film_id}/')
+            review = Rezencje.objects.create(Ocena=score, Komentarz=comment, ID_Produkcji_id=id_produkcji, ID_Uzytkownika_id=id_uzytkownika)
+            review.save()
+            return redirect(f'/info/{film_id}/')
 
-    user = request.user  # Pobieramy użytkownika z requestu
-    return render(request, 'movie_info.html', {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user})
+        user = request.user  # Pobieramy użytkownika z requestu
+        return render(request, 'movie_info.html', {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user})
 
 
 def login_view(request):
@@ -68,12 +72,21 @@ def register_view(request):
         username = request.POST['username']
         password = request.POST['password']
         password_2 = request.POST['password_2']
-        if password == password_2:
-            uzytkownicy = Uzytkownicy.objects.create(Nazwa_Uzytkownika=username, E_mail=email, Haslo=password, Publiczne=False)
-            uzytkownicy.save()
-            return redirect('/login')
-        else:
-            return redirect('/register')
+        if not email or not username or not password or not password_2:
+            return render(request, 'register.html', {'error': 'Wszystkie pola są wymagane.'})
+
+        if Uzytkownicy.objects.filter(E_mail=email).exists():
+            return render(request, 'register.html', {'error': 'Konto o podanym adresie e-mail już istnieje.'})
+
+        if Uzytkownicy.objects.filter(Nazwa_Uzytkownika=username).exists():
+            return render(request, 'register.html', {'error': 'Konto o podanej nazwie użytkownika już istnieje.'})
+
+        if password != password_2:
+            return render(request, 'register.html', {'error': 'Hasła nie są identyczne.'})
+
+        uzytkownicy = Uzytkownicy.objects.create(Nazwa_Uzytkownika=username, E_mail=email, Haslo=password, Publiczne=False)
+        uzytkownicy.save()
+        return redirect('/login')
     else:
         return render(request, 'register.html')
 
@@ -90,10 +103,9 @@ def user_account_view(request, user_id):
     try:
         user = get_object_or_404(Uzytkownicy, id=user_id)
     except Http404:
-        return redirect('/')
+        return render(request, 'missing_data.html', {'data': "użytkownik"})
     else:
         return render(request, 'user_account.html', {'user': user})
-        
 
 
 def logout_view(request):

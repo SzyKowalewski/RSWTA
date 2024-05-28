@@ -34,7 +34,7 @@
         <div class="cepibula">
             {% for u in uzytkownicy %}
                 {% if opn.ID_Uzytkownika_id == u.id %}
-                    <div class="user"><h2>{{ u.Nazwa_Uzytkownika }}</h2></div>
+                    <div class="user"><a href="/user/{{ u.id }}"><h2>{{ u.Nazwa_Uzytkownika }}</h2></a></div>
                 {% endif %}
             {% endfor %}
             <div class="rate">{{ opn.Ocena }}/10</div>

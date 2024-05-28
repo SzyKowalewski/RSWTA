@@ -42,3 +42,8 @@ header > .button {
     margin: 7px;
     right: 10px;
 }
+
+.error {
+    color: var(--error);
+    font-style: italic;
+}
