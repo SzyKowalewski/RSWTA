@@ -57,7 +57,7 @@ def login_view(request):
             user = Uzytkownicy.objects.get(E_mail=email)
         except Uzytkownicy.DoesNotExist:
             user = None
-        if user is not None and user.Haslo == password:
+        if user is not None and user.check_password(password):
             request.session['user_id'] = user.id
             return redirect('home')
         else:
@@ -84,7 +84,8 @@ def register_view(request):
         if password != password_2:
             return render(request, 'register.html', {'error': 'Hasła nie są identyczne.'})
 
-        uzytkownicy = Uzytkownicy.objects.create(Nazwa_Uzytkownika=username, E_mail=email, Haslo=password, Publiczne=False)
+        uzytkownicy = Uzytkownicy.objects.create(Nazwa_Uzytkownika=username, E_mail=email, Publiczne=False)
+        uzytkownicy.set_password(password)
         uzytkownicy.save()
         return redirect('/login')
     else:

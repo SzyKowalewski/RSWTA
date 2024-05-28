@@ -7,7 +7,13 @@
     <div style="text-align: center">
         <h1>{{ film.Tytul }}</h1>
     </div>
-    <div class="photo" style="height: 400px; width: 400px; margin: 10px; float: left">znowu miejsce na zdjęcie, tym razem większe</div>
+    <div class="photo" style="height: 100px; width: 100px; margin: 10px; float: left">
+        {% if film.Plakat %}
+            <img src="{{ film.Plakat.url }}" alt="Plakat filmu" style="max-height: 100%; max-width: 100%;">
+        {% else %}
+            <p>Plakat niedostępny</p>
+        {% endif %}
+    </div>
     <div class="opis">Reżyser/reżyserzy: {{ film.Rezyser }}</div><br/><br/><br/>
     <div class="opis">Kategoria: {{ film.ID_Kategorii_id }}</div><br/><br/><br/>
     <div class="opis">Długość: {{ film.Dlugosc_ilosc_odcinkow }}</div>

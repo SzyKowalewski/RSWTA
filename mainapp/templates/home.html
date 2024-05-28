@@ -18,7 +18,13 @@
     {% for film in filmy %}
     <a href="/info/{{ film.id }}/">
         <div class="item">
-            <div class="photo">miejsce na zdjęcie, jak się zdecydujemy dodać</div>
+            <div class="photo" style="height: 150px; width: 100px; margin: 10px; float: left">
+                {% if film.Plakat %}
+                    <img src="{{ film.Plakat.url }}" alt="Plakat filmu" style="max-height: 100%; max-width: 100%;">
+                {% else %}
+                    <p>Plakat niedostępny</p>
+                {% endif %}
+            </div>
             <h2>{{ film.Tytul }}</h2>
             <h4>{{ film.ID_Kategorii }}</h4>
             <h3>{{ film.Rezyser }}</h3>
