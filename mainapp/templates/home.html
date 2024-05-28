@@ -18,7 +18,7 @@
     {% for film in filmy %}
     <a href="/info/{{ film.id }}/">
         <div class="item">
-            <div class="photo" style="height: 150px; width: 100px; margin: 10px; float: left">
+            <div class="photo" style=" margin: 10px; float: left">
                 {% if film.Plakat %}
                     <img src="{{ film.Plakat.url }}" alt="Plakat filmu" style="max-height: 100%; max-width: 100%;">
                 {% else %}

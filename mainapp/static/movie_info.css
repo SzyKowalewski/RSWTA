@@ -37,6 +37,7 @@
     background-color: var(--secondary-content);
     color: var(--secondary-dark);
     border-radius: 5%;
+    padding: 5px;
 }
 
 .cepibula > .rate {
@@ -79,4 +80,15 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
     -moz-appearance: textfield;
+}
+
+.photo_2 {
+    margin: 10px auto;
+    background-color: var(--foreground);
+    color: var(--copy);
+    vertical-align: center;
+}
+
+.photo_2 > img {
+    height: 350px;
 }

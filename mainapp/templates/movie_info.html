@@ -7,9 +7,9 @@
     <div style="text-align: center">
         <h1>{{ film.Tytul }}</h1>
     </div>
-    <div class="photo" style="height: 100px; width: 100px; margin: 10px; float: left">
+    <div class="photo_2" style=" margin: 10px; float: left">
         {% if film.Plakat %}
-            <img src="{{ film.Plakat.url }}" alt="Plakat filmu" style="max-height: 100%; max-width: 100%;">
+            <img src="{{ film.Plakat.url }}" alt="Plakat filmu">
         {% else %}
             <p>Plakat niedostępny</p>
         {% endif %}
