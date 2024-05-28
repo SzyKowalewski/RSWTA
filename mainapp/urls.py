@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from mainapp import views
-from .views import widok_home, details_view, login_view, register_view, logged_user_account_view, user_account_view, missing_data_view
+from .views import widok_home, details_view, login_view, register_view, logged_user_account_view, user_account_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
