@@ -33,7 +33,7 @@ class ProdukcjeAdmin(admin.ModelAdmin):
             "fields": ["Tytul", "Rezyser",]
         }),
         ("Informacje dodatkowe", {
-            "fields": ["Opis","Dlugosc_ilosc_odcinkow", "ID_Kategorii","Data_premiery"],
+            "fields": ["Opis","Dlugosc_ilosc_odcinkow", "ID_Kategorii","Data_premiery","Plakat"],
             "classes": ["collapse"]
         }),
     ]
