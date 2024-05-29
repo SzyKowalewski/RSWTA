@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+   Lista filmów
+{% endblock %}
+
+{% block content %}
+<div class="title">Twoja lista {{ type }}</div>
+{% for film in items %}
+<a href="/info/{{ film.id }}/">
+    <div class="list_item">
+        <div class="wl_photo" style=" margin: 10px; float: left">
+            {% if film.Plakat %}
+                <img src="{{ film.Plakat.url }}" alt="Plakat filmu" style="max-height: 100%; max-width: 100%;">
+            {% else %}
+                <p>Plakat niedostępny</p>
+            {% endif %}
+        </div>
+        <div class="right">
+            <h2>{{ film.Tytul }}</h2>
+            <h4>{{ film.ID_Kategorii }}</h4>
+            <h3>{{ film.Rezyser }}</h3>
+            <span>{{ film.Dlugosc_ilosc_odcinkow}}</span>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% endblock %}

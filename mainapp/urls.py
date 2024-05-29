@@ -19,6 +19,8 @@ urlpatterns = [
     path('add_to_watchedlist/<int:film_id>/', add_to_watchedlist, name='add_to_watchedlist'),
     path('watchlist/<int:wl_user_id>/', watchlist_view, name='watchlist_view'),
     path('watched_list/<int:wl_user_id>/', views.watched_list_view, name='watched_list_view'),
+    path('my_watchlist/', views.my_watchlist_view, name='my_watchlist_view'),
+    path('mt_watched_list/', views.my_watched_list_view, name='my_watched_list_view'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -11,9 +11,11 @@
 <div style="margin: 20px; color: white;">
     <h2>{{user.Nazwa_Uzytkownika}}</h2>
     <h2>{{user.E_mail}}</h2>
-    <h2>Dane publiczne:
+    <h2 style="clear: both;">Dane publiczne:
         {% if user.Publiczne %} <input type="checkbox" checked disabled> {% else %}
         <input type="checkbox" disabled> {% endif %}
+    <a href="/my_watchlist/"><div class="button" style="float: left; margin-right: 20px;"> Do obejrzenia</div></a>
+    <a href="/my_watched_list/"><div class="button" style="float: left"> Obejrzane</div></a>
     </h2>
 </div>
 {% endblock %}

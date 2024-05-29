@@ -135,27 +135,55 @@ def add_to_watchedlist(request, film_id):
 
 
 def watchlist_view(request, wl_user_id):
-    wl_user = get_object_or_404(Uzytkownicy, id=wl_user_id)
-    if not wl_user.Publiczne:
-        return render(request, 'watchlist.html',
-                      {"error": "Dane tego użytkownika są prywatne, nie można wyświetlić listy."})
+    try:
+        wl_user = get_object_or_404(Uzytkownicy, id=wl_user_id)
+    except Http404:
+        return render(request, 'missing_data.html', {'data': "użytkownik"})
+    else:
+        if not wl_user.Publiczne:
+            return render(request, 'watchlist.html',
+                          {"error": "Dane tego użytkownika są prywatne, nie można wyświetlić listy."})
 
-    movies_id_list = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=wl_user_id)
-    movies = Produkcje.objects.filter(id__in=movies_id_list)
+        queryset = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=wl_user_id)
+        movies_id_list = queryset.values_list('ID_Produkcji_id', flat=True)
+        movies = Produkcje.objects.filter(id__in=movies_id_list)
 
-    return render(request, 'watchlist.html', {"items": movies, "wl_user": wl_user, "type": "do obejrzenia"})
+        return render(request, 'watchlist.html', {"items": movies, "wl_user": wl_user, "type": "do obejrzenia"})
 
 
 def watched_list_view(request, wl_user_id):
-    wl_user = get_object_or_404(Uzytkownicy, id=wl_user_id)
-    if not wl_user.Publiczne:
-        return render(request, 'watchlist.html',
-                      {"error": "Dane tego użytkownika są prywatne, nie można wyświetlić listy."})
+    try:
+        wl_user = get_object_or_404(Uzytkownicy, id=wl_user_id)
+    except Http404:
+        return render(request, 'missing_data.html', {'data': "użytkownik"})
+    else:
+        if not wl_user.Publiczne:
+            return render(request, 'watchlist.html',
+                          {"error": "Dane tego użytkownika są prywatne, nie można wyświetlić listy."})
 
-    movies_id_list = Obejrzane.objects.filter(ID_Uzytkownika__id=wl_user_id)
+        queryset = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=wl_user_id)
+        movies_id_list = queryset.values_list('ID_Produkcji_id', flat=True)
+        movies = Produkcje.objects.filter(id__in=movies_id_list)
+
+        return render(request, 'watchlist.html', {"items": movies, "wl_user": wl_user, "type": "obejrzanych"})
+
+
+def my_watchlist_view(request):
+    user_id = request.user.id
+    queryset = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=user_id)
+    movies_id_list = queryset.values_list('ID_Produkcji_id', flat=True)
     movies = Produkcje.objects.filter(id__in=movies_id_list)
 
-    return render(request, 'watchlist.html', {"items": movies, "wl_user": wl_user, "type": "obejrzanych"})
+    return render(request, 'my_watchlist.html', {"items": movies, "type": "do obejrzenia"})
+
+
+def my_watched_list_view(request):
+    user_id = request.user.id
+    queryset = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=user_id)
+    movies_id_list = queryset.values_list('ID_Produkcji_id', flat=True)
+    movies = Produkcje.objects.filter(id__in=movies_id_list)
+
+    return render(request, 'my_watchlist.html', {"items": movies, "type": "obejrzanych"})
 
 
 class BaseView(generic.base.TemplateView):
