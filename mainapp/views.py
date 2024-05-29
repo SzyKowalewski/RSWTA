@@ -144,7 +144,7 @@ def watchlist_view(request, wl_user_id):
             return render(request, 'watchlist.html',
                           {"error": "Dane tego użytkownika są prywatne, nie można wyświetlić listy."})
 
-        queryset = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=wl_user_id)
+        queryset = Do_obejrzenia.objects.filter(ID_Uzytkownika_id=wl_user_id)
         movies_id_list = queryset.values_list('ID_Produkcji_id', flat=True)
         movies = Produkcje.objects.filter(id__in=movies_id_list)
 
@@ -161,7 +161,7 @@ def watched_list_view(request, wl_user_id):
             return render(request, 'watchlist.html',
                           {"error": "Dane tego użytkownika są prywatne, nie można wyświetlić listy."})
 
-        queryset = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=wl_user_id)
+        queryset = Obejrzane.objects.filter(ID_Uzytkownika_id=wl_user_id)
         movies_id_list = queryset.values_list('ID_Produkcji_id', flat=True)
         movies = Produkcje.objects.filter(id__in=movies_id_list)
 
@@ -169,6 +169,12 @@ def watched_list_view(request, wl_user_id):
 
 
 def my_watchlist_view(request):
+    if request.method == 'POST':
+        user_id = request.POST['user_id']
+        movie_id = request.POST['movie_id']
+        Do_obejrzenia.objects.filter(ID_Uzytkownika_id=user_id, ID_Produkcji_id=movie_id).delete()
+        return redirect('my_watchlist_view')
+
     user_id = request.user.id
     queryset = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=user_id)
     movies_id_list = queryset.values_list('ID_Produkcji_id', flat=True)
@@ -178,8 +184,14 @@ def my_watchlist_view(request):
 
 
 def my_watched_list_view(request):
+    if request.method == 'POST':
+        user_id = request.POST['user_id']
+        movie_id = request.POST['movie_id']
+        Obejrzane.objects.filter(ID_Uzytkownika_id=user_id, ID_Produkcji_id=movie_id).delete()
+        return redirect('my_watched_list_view')
+
     user_id = request.user.id
-    queryset = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=user_id)
+    queryset = Obejrzane.objects.filter(ID_Uzytkownika__id=user_id)
     movies_id_list = queryset.values_list('ID_Produkcji_id', flat=True)
     movies = Produkcje.objects.filter(id__in=movies_id_list)
 

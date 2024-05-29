@@ -7,7 +7,7 @@
 <div class="title">Twoja lista {{ type }}</div>
 {% for film in items %}
 <a href="/info/{{ film.id }}/">
-    <div class="list_item">
+    <div class="list_item" style="position: relative;">
         <div class="wl_photo" style=" margin: 10px; float: left">
             {% if film.Plakat %}
                 <img src="{{ film.Plakat.url }}" alt="Plakat filmu" style="max-height: 100%; max-width: 100%;">
@@ -21,6 +21,13 @@
             <h3>{{ film.Rezyser }}</h3>
             <span>{{ film.Dlugosc_ilosc_odcinkow}}</span>
         </div>
+        <form method="POST" style="position: absolute; top: 10px; right: 10px">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <input type="hidden" name="movie_id" value="{{ film.id }}">
+            <input type="hidden" name="type" value="{{ type }}">
+            <button type="submit" class="button">Usuń</button>
+        </form>
     </div>
 </a>
 {% endfor %}
