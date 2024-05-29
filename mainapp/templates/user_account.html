@@ -11,8 +11,10 @@
 <div style="margin: 20px; color: white;">
     <h2>{{user.Nazwa_Uzytkownika}}</h2>
     <h2>{{user.E_mail}}</h2>
-    <h2>{% if user.Publiczne %} tu będą kiedyś przyciski do wyświetlenia list danego użytkownika {% else %}
-        Ten użytkownik nie udostępnia swoich danych publicznie :< {% endif %}
-    </h2>
+    {% if user.Publiczne %}
+    <a href="/watchlist/{{user.id}}"><div class="button" style="float: left"> Do obejrzenia</div></a>
+    <a href="/watched_list/{{user.id}}"><div class="button" style="float: left"> Obejrzane</div></a>
+    {% else %}<h2>Ten użytkownik nie udostępnia swoich danych publicznie :< </h2>{% endif %}
+
 </div>
 {% endblock %}

@@ -133,5 +133,30 @@ def add_to_watchedlist(request, film_id):
         Obejrzane.objects.create(ID_Produkcji=film, ID_Uzytkownika=user)
         return redirect('movie_info', film_id=film.id)
 
+
+def watchlist_view(request, wl_user_id):
+    wl_user = get_object_or_404(Uzytkownicy, id=wl_user_id)
+    if not wl_user.Publiczne:
+        return render(request, 'watchlist.html',
+                      {"error": "Dane tego użytkownika są prywatne, nie można wyświetlić listy."})
+
+    movies_id_list = Do_obejrzenia.objects.filter(ID_Uzytkownika__id=wl_user_id)
+    movies = Produkcje.objects.filter(id__in=movies_id_list)
+
+    return render(request, 'watchlist.html', {"items": movies, "wl_user": wl_user, "type": "do obejrzenia"})
+
+
+def watched_list_view(request, wl_user_id):
+    wl_user = get_object_or_404(Uzytkownicy, id=wl_user_id)
+    if not wl_user.Publiczne:
+        return render(request, 'watchlist.html',
+                      {"error": "Dane tego użytkownika są prywatne, nie można wyświetlić listy."})
+
+    movies_id_list = Obejrzane.objects.filter(ID_Uzytkownika__id=wl_user_id)
+    movies = Produkcje.objects.filter(id__in=movies_id_list)
+
+    return render(request, 'watchlist.html', {"items": movies, "wl_user": wl_user, "type": "obejrzanych"})
+
+
 class BaseView(generic.base.TemplateView):
     template_name = "base.html"
