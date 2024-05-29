@@ -40,7 +40,10 @@ def details_view(request, film_id):
             comment = request.POST['comment']
             id_produkcji = request.POST['id_produkcji']
             id_uzytkownika = request.POST['id_uzytkownika']
-
+            if int(score) > 10 or int(score) < 0:
+                user = request.user
+                return render(request, 'movie_info.html',
+                              {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user, 'error': 'Ocena musi być z zakresu 0 a 10'})
             review = Rezencje.objects.create(Ocena=score, Komentarz=comment, ID_Produkcji_id=id_produkcji, ID_Uzytkownika_id=id_uzytkownika)
             review.save()
             return redirect(f'/info/{film_id}/')
