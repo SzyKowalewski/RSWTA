@@ -98,13 +98,17 @@ def register_view(request):
 def logged_user_account_view(request):
     if request.method == 'POST':
         Nazwa_Uzytkownika = request.POST['username']
-        E_mail = request.POST['email']
+        E_mail2 = request.POST['email']
         id_uzytkownika = request.POST['id_uzytkownika']
+        uzytkownik = Uzytkownicy.objects.get(E_mail=E_mail2)
+        uzytkownik.Nazwa_Uzytkownika = Nazwa_Uzytkownika
+        uzytkownik.E_mail = E_mail2
+        uzytkownik.save()
 
     user = request.user  # Pobieramy użytkownika z requestu
 
-    #uzytkownicy = Uzytkownicy.objects.get(E_mail=E_mail)
-    
+
+
     if user.id is not None:
         return render(request, 'my_account.html', {'user': user})
     else:
