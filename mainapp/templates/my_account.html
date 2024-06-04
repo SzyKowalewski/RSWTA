@@ -19,23 +19,41 @@
     <a href="/my_watched_list/"><div class="button" style="float: left"> Obejrzane</div></a>
 
     <div style="margin: 20px; cursor: pointer; width: fit-content; user-select: none;"
-         class="button" onclick="popup()" id="popup_button">Edytuj swoje konto</div>
+         class="button" onclick="popup_data()" id="popup_button">Edytuj swoje konto</div>
          <div id="edit_profile_popup" style="display: none">
 
         <form action="" method="POST">
-            <label>Nazwa Użytkownika: <input type="text" name="username" /></label><br /><br />
-            <label>Email: <input type="text" name="email" /></label><br /><br />
+            <label>Nazwa Użytkownika: <input type="text" name="username" value="{{ user.Nazwa_Uzytkownika }}"/></label><br /><br />
+            <label>Email: <input type="text" name="email" value="{{ user.E_mail }}" /></label><br /><br />
+            <label>Confirm Password: <input type="password" name="password" /></label><br /><br />
             <input type="hidden" name="id_uzytkownika" value="{{ user.id }}" />
+            <input type="hidden" name="formType" value="data">
 
             <input type="submit" value="Edytuj Dane">
             {% csrf_token %}
         </form>
-        <span class="error">{{ error }}</span>
     </div>
+
+    <div style="margin: 20px; cursor: pointer; width: fit-content; user-select: none;"
+         class="button" onclick="popup_password()" id="popup_button">Edytuj swoje hasło</div>
+         <div id="edit_password_popup" style="display: none">
+    
+            <form action="" method="POST">
+                <label>Old Password: <input type="password" name="oldPassword" /></label><br /><br />
+                <label>New Password: <input type="password" name="newPassword" /></label><br /><br />
+                <label>Confirm Password: <input type="password" name="confirmPassword" /></label><br /><br />
+                <input type="hidden" name="id_uzytkownika" value="{{ user.id }}" />
+                <input type="hidden" name="formType" value="password">
+    
+                <input type="submit" value="Potwierdź">
+                {% csrf_token %}
+            </form>
+        </div>
+<span class="error">{{ error }}</span>
 
 <script>
     let visible = false;
-    function popup(){
+    function popup_data(){
         if(!visible){
             visible = true;
             document.getElementById("edit_profile_popup").style.display = "";
@@ -45,6 +63,19 @@
             visible = false;
             document.getElementById("edit_profile_popup").style.display = "none";
             document.getElementById("popup_button").innerHTML = "Edytuj swoje konto";
+        }
+    }
+    let visible2 = false;
+    function popup_password(){
+        if(!visible){
+            visible2 = true;
+            document.getElementById("edit_password_popup").style.display = "";
+            document.getElementById("popup_button").innerHTML = "Anuluj";
+        }
+        else{
+            visible2 = false;
+            document.getElementById("edit_password_popup").style.display = "none";
+            document.getElementById("popup_button").innerHTML = "Edytuj swoje hasło";
         }
     }
 </script>
