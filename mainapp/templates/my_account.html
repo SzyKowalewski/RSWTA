@@ -17,5 +17,37 @@
     </h2><br />
     <a href="/my_watchlist/"><div class="button" style="float: left; margin-right: 20px;"> Do obejrzenia</div></a>
     <a href="/my_watched_list/"><div class="button" style="float: left"> Obejrzane</div></a>
+
+    <div style="margin: 20px; cursor: pointer; width: fit-content; user-select: none;"
+         class="button" onclick="popup()" id="popup_button">Edytuj swoje konto</div>
+         <div id="edit_profile_popup" style="display: none">
+
+        <form action="" method="POST">
+            <label>Nazwa Użytkownika: <input type="text" name="username" /></label><br /><br />
+            <label>Email: <input type="text" name="email" /></label><br /><br />
+            <input type="hidden" name="id_uzytkownika" value="{{ user.id }}" />
+
+            <input type="submit" value="Edytuj Dane">
+            {% csrf_token %}
+        </form>
+        <span class="error">{{ error }}</span>
+    </div>
+
+<script>
+    let visible = false;
+    function popup(){
+        if(!visible){
+            visible = true;
+            document.getElementById("edit_profile_popup").style.display = "";
+            document.getElementById("popup_button").innerHTML = "Anuluj";
+        }
+        else{
+            visible = false;
+            document.getElementById("edit_profile_popup").style.display = "none";
+            document.getElementById("popup_button").innerHTML = "Edytuj swoje konto";
+        }
+    }
+</script>
+
 </div>
 {% endblock %}
