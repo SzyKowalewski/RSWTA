@@ -1,1 +1,1 @@
-web: gunicorn mainapp.wsgi
+web: gunicorn RSWTA.wsgi
