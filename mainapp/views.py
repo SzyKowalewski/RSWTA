@@ -97,17 +97,34 @@ def register_view(request):
 
 def logged_user_account_view(request):
     if request.method == 'POST':
-        Nazwa_Uzytkownika = request.POST['username']
-        E_mail2 = request.POST['email']
-        id_uzytkownika = request.POST['id_uzytkownika']
-        uzytkownik = Uzytkownicy.objects.get(E_mail=E_mail2)
-        uzytkownik.Nazwa_Uzytkownika = Nazwa_Uzytkownika
-        uzytkownik.E_mail = E_mail2
-        uzytkownik.save()
+        if request.POST.get('formType') == 'data':
+            Nazwa_Uzytkownika = request.POST['username']
+            E_mail = request.POST['email']
+            password = request.POST['password']
+            id_uzytkownika = request.POST['id_uzytkownika']
+            uzytkownik = Uzytkownicy.objects.get(id_uzytkownika=id_uzytkownika)
+            if uzytkownik.check_password(password):
+                uzytkownik.Nazwa_Uzytkownika = Nazwa_Uzytkownika
+                uzytkownik.E_mail = E_mail
+                uzytkownik.save()
+                return redirect('/user')
+            else:
+                return render(request, 'my_account.html', {'error': 'Hasło jest niepoprawne'})
+        else:
+            oldPassword = request.POST.get('oldPassword')
+            id_uzytkownika = request.POST.get('id_uzytkownika')
+            uzytkownik = Uzytkownicy.objects.get(id=id_uzytkownika)
+            if uzytkownik.check_password(oldPassword):
+                newPassword = request.POST.get('newPassword')
+                confirmPassword = request.POST.get('confirmPassword')
+                if newPassword == confirmPassword:
+                    uzytkownik.set_password(newPassword)
+                else:
+                    return render(request, 'my_account.html', {'error': 'Hasła nie są identyczne.'})
+            else:
+                return render(request, 'my_account.html', {'error': 'Stare hasło nie jest poprawne'})
 
     user = request.user  # Pobieramy użytkownika z requestu
-
-
 
     if user.id is not None:
         return render(request, 'my_account.html', {'user': user})
