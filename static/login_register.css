@@ -1,0 +1,9 @@
+.login_menu {
+    padding: 20px;
+    background-color: var(--copy);
+    margin: 100px auto;
+    font-size: 1.5em;
+    width: 40vw;
+    border: 1px solid var(--border);
+    color: var(--foreground);
+}

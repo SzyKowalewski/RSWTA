@@ -1,0 +1,94 @@
+#wrapper {
+    position: relative;
+    margin: 20px;
+    background-color: var(--primary-dark);
+    height: 82vh;
+    width: 34vw;
+    float: left;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+#wrapper h1 {
+    background-color: var(--secondary-dark);
+    color: var(--secondary-content);
+}
+
+.info {
+    margin: 20px;
+    float: left;
+    width: 60vw;
+    height: 82vh;
+    background-color: var(--secondary);
+    color: var(--secondary-content);
+}
+
+.cepibula {
+    margin: 20px;
+    background-color: var(--secondary-dark);
+    color: var(--secondary-content);
+    border-radius: 15px;
+    padding: 10px;
+    height: 18vh;
+}
+
+.cepibula > .user {
+    float: left;
+    background-color: var(--secondary-content);
+    color: var(--secondary-dark);
+    border-radius: 5%;
+    padding: 5px;
+}
+
+.cepibula > .rate {
+    font-size: larger;
+    float: right;
+}
+
+.cepibula > .comment {
+    clear: both;
+    padding-top: 10px;
+}
+
+.opis {
+    float: left;
+    padding: 7px;
+    color: var(--primary-content);
+}
+
+#opinion_popup {
+    padding: 20px;
+    position: absolute;
+    background-color: var(--success);
+    color: var(--success-content);
+    height: 200px;
+    left: 100px;
+    top: 20px;
+}
+
+#opinion_popup textarea {
+    height: 100px;
+    width: 350px;
+    resize: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.photo_2 {
+    margin: 10px auto;
+    background-color: var(--foreground);
+    color: var(--copy);
+    vertical-align: center;
+}
+
+.photo_2 > img {
+    height: 350px;
+}

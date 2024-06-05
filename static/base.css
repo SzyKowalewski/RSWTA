@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header, footer {
+    padding: 10px;
+    text-align: center;
+    height: 5vh;
+    width: 98.945vw;
+    background-color: var(--primary-dark);
+    color: var(--copy);
+    font-size: 2em;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+}
+
+.button {
+    background-color: var(--primary);
+    padding: 8px;
+    border-radius: 5px;
+    color: var(--primary-content);
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: var(--primary-light);
+    color: var(--foreground);
+}
+
+header > .button {
+    float: right;
+    font-size: medium;
+    margin: 7px;
+    right: 10px;
+}
+
+.error {
+    color: var(--error);
+    font-style: italic;
+}

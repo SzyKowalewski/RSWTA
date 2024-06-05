@@ -1,0 +1,51 @@
+body {
+    background-color: var(--background);
+}
+
+.item {
+    margin: 20px;
+    text-align: center;
+    float: left;
+    width: 20vw;
+    height: 32vh;
+    background-color: var(--secondary);
+    color: var(--secondary-content);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.item * {
+    padding: 3px;
+}
+
+.photo {
+    height: 120px;
+    margin: 10px auto;
+    background-color: var(--foreground);
+    color: var(--copy);
+    vertical-align: center;
+    padding: 10px;
+}
+
+.item > span {
+    display: inline-block;
+}
+
+.item > .home_desc {
+    max-height: 3.5vh;
+    width: 15vw;
+    background-color: var(--primary-dark);
+    color: var(--primary-content);
+    overflow: hidden;
+    padding: 7px;
+}
+
+.item > .home_desc:hover {
+    overflow: auto;
+    max-height: unset;
+}
+
+.search-bar {
+    padding: 10px;
+    color: var(--copy);
+}
