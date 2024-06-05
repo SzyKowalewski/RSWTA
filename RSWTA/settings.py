@@ -36,7 +36,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-omm3uw=kjglc2&
 #DEBUG = False
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rswta-production.up.railway.app', '127.0.0.1']
+
+CSRF_TRUSTED_ORIGINS = ['https://rswta-production.up.railway.app']
 
 # Application definition
 
