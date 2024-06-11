@@ -16,7 +16,8 @@
     </div>
     <div class="opis">Reżyser/reżyserzy: {{ film.Rezyser }}</div><br/><br/><br/>
     <div class="opis">Kategoria: {{ film.ID_Kategorii }}</div><br/><br/><br/>
-    <div class="opis">Długość: {{ film.Dlugosc_ilosc_odcinkow }}</div>
+    <div class="opis">Długość: {{ film.Dlugosc_ilosc_odcinkow }}</div><br/><br/><br/>
+    <div class="opis" style="text-align: center">Średnia ocena: {{ average_rating }}/10</div>
     <div class="opis" style="clear: both; text-align: center">Opis: {{ film.Opis }}</div>
     <br />
     <div style="clear: both; width: 100%;">
@@ -65,6 +66,13 @@
             {% endfor %}
             <div class="rate">{{ opn.Ocena }}/10</div>
             <div class="comment">{{ opn.Komentarz }}</div>
+            {% if user.id == opn.ID_Uzytkownika_id %}
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="review_id" value="{{ opn.id }}">
+                    <button type="submit" name="action" value="delete_review" class="button">Usuń opinię</button>
+                </form>
+            {% endif %}
         </div>
     {% endfor %}
 </div>
