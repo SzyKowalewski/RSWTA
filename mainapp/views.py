@@ -36,20 +36,30 @@ def details_view(request, film_id):
         uzytkownicy = Uzytkownicy.objects.all()
 
         if request.method == 'POST':
-            score = request.POST['score']
-            comment = request.POST['comment']
-            id_produkcji = request.POST['id_produkcji']
-            id_uzytkownika = request.POST['id_uzytkownika']
-            if int(score) > 10 or int(score) < 0:
-                user = request.user
-                return render(request, 'movie_info.html',
-                              {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user, 'error': 'Ocena musi być z zakresu 0 a 10'})
-            review = Rezencje.objects.create(Ocena=score, Komentarz=comment, ID_Produkcji_id=id_produkcji, ID_Uzytkownika_id=id_uzytkownika)
-            review.save()
-            return redirect(f'/info/{film_id}/')
+            if request.POST.get('action') == 'delete_review':
+                review_id = request.POST['review_id']
+                try:
+                    review = Rezencje.objects.get(id=review_id, ID_Uzytkownika_id=request.user.id)
+                    review.delete()
+                except Rezencje.DoesNotExist:
+                    pass
+                return redirect(f'/info/{film_id}/')
+
+            else:
+                score = request.POST['score']
+                comment = request.POST['comment']
+                id_produkcji = request.POST['id_produkcji']
+                id_uzytkownika = request.POST['id_uzytkownika']
+                if int(score) > 10 or int(score) < 0:
+                    user = request.user
+                    return render(request, 'movie_info.html',
+                                  {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user, 'average_rating': film.average_rating, 'error': 'Ocena musi być z zakresu 0 a 10'})
+                review = Rezencje.objects.create(Ocena=score, Komentarz=comment, ID_Produkcji_id=id_produkcji, ID_Uzytkownika_id=id_uzytkownika)
+                review.save()
+                return redirect(f'/info/{film_id}/')
 
         user = request.user  # Pobieramy użytkownika z requestu
-        return render(request, 'movie_info.html', {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user})
+        return render(request, 'movie_info.html', {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user,'average_rating': film.average_rating()})
 
 
 def login_view(request):
