@@ -46,17 +46,18 @@
             <label>Komentarz:<br /><textarea name="comment"></textarea></label><br /><br />
             <input type="hidden" name="id_uzytkownika" value="{{ user.id }}" />
             <input type="hidden" name="id_produkcji" value="{{ film.id }}" />
+            <input type="hidden" name="review_id" id="review_id_input" />
             {% if user.id is not None %}
-            <input type="submit" value="Dodaj opinię">
+            <input type="submit" value="Dodaj/Edytuj opinię">
             {% else %}
-            <input type="submit" value="Dodaj opinię" disabled> <span class="error">Aby dodać opinię należy się zalogować.</span>
+            <input type="submit" value="Dodaj/Edytuj opinię" disabled> <span class="error">Aby dodać opinię należy się zalogować.</span>
             {% endif %}
             {% csrf_token %}
         </form>
         <span class="error">{{ error }}</span>
     </div>
     <div style="margin: 20px; cursor: pointer; width: fit-content; user-select: none;"
-         class="button" onclick="popup()" id="popup_button">Dodaj opinię</div>
+         class="button" onclick="popup()" id="popup_button">Dodaj/Edytuj opinię</div>
     {% for opn in opinie %}
         <div class="cepibula">
             {% for u in uzytkownicy %}
@@ -89,6 +90,12 @@
             document.getElementById("opinion_popup").style.display = "none";
             document.getElementById("popup_button").innerHTML = "Dodaj opinię";
         }
+    }
+    function editOpinion(reviewId, score, comment) {
+        document.getElementById("score_input").value = score;
+        document.getElementById("comment_input").value = comment;
+        document.getElementById("review_id_input").value = reviewId;
+        popup();
     }
 </script>
 {% endblock %}

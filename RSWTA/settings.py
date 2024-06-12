@@ -14,7 +14,29 @@ from pathlib import Path
 # to trzeba było dodać żeby działały style w innym pliku
 import mimetypes
 import os
+import logging
 mimetypes.add_type("text/css", ".css", True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': r'C:\Users\kowal\Desktop\django.log',  # Ścieżka do pliku z logami
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',  # Poziom logowania (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+            'propagate': True,
+        },
+    },
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
