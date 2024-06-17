@@ -26,7 +26,7 @@ LOGGING = {
         },
         'file': {
             'class': 'logging.FileHandler',
-            'filename': r'C:\Users\kowal\Desktop\django.log',  # Ścieżka do pliku z logami
+            'filename': r'mainapp\logs\django.log',  # Ścieżka do pliku z logami
         },
     },
     'loggers': {
