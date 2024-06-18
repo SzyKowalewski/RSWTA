@@ -168,7 +168,19 @@ def logged_user_account_view(request):
             E_mail = request.POST['email']
             password = request.POST['password']
             id_uzytkownika = request.POST['id_uzytkownika']
-            uzytkownik = Uzytkownicy.objects.get(id_uzytkownika=id_uzytkownika)
+            uzytkownik = Uzytkownicy.objects.get(id=id_uzytkownika)
+            try:
+                e_user = Uzytkownicy.objects.get(E_mail=E_mail)
+            except Uzytkownicy.DoesNotExist:
+                e_user = None
+            try:
+                n_user = Uzytkownicy.objects.get(Nazwa_Uzytkownika=Nazwa_Uzytkownika)
+            except Uzytkownicy.DoesNotExist:
+                n_user = None
+            if Uzytkownicy.objects.filter(E_mail=E_mail).exists() and e_user != uzytkownik and e_user:
+                return render(request, 'my_account.html', {'error': 'Konto o podanym adresie e-mail już istnieje.'})
+            if Uzytkownicy.objects.filter(Nazwa_Uzytkownika=Nazwa_Uzytkownika).exists() and n_user != uzytkownik and n_user:
+                return render(request, 'my_account.html', {'error': 'Konto o podanej nazwie już istnieje.'})
             if uzytkownik.check_password(password):
                 uzytkownik.Nazwa_Uzytkownika = Nazwa_Uzytkownika
                 uzytkownik.E_mail = E_mail
@@ -178,6 +190,12 @@ def logged_user_account_view(request):
             else:
                 logger.warning(f'Nieudana próba zmiany danych konta użytkownika o id {id_uzytkownika}. Podane hasło jest niepoprawne')
                 return render(request, 'my_account.html', {'error': 'Hasło jest niepoprawne'})
+        elif request.POST.get('formType') == 'public':
+            id_uzytkownika = request.POST['id_uzytkownika']
+            uzytkownik = Uzytkownicy.objects.get(id=id_uzytkownika)
+            uzytkownik.Publiczne = not uzytkownik.Publiczne
+            uzytkownik.save()
+            return redirect('/user')
         else:
             oldPassword = request.POST.get('oldPassword')
             id_uzytkownika = request.POST.get('id_uzytkownika')

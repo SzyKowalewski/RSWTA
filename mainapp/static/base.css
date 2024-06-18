@@ -17,11 +17,23 @@ header, footer {
     background-color: var(--primary-dark);
     color: var(--copy);
     font-size: 2em;
+    position: fixed;
+}
+
+header {
+    top: 0;
+    right: 0;
+    left: 0;
 }
 
 footer {
-    position: absolute;
     bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.content {
+    padding-top: 8vh;
 }
 
 .button {
