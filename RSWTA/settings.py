@@ -15,6 +15,8 @@ from pathlib import Path
 import mimetypes
 import os
 import logging
+import dj_database_url
+
 
 mimetypes.add_type("text/css", ".css", True)
 
@@ -58,7 +60,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-omm3uw=kjglc2&
 #DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['web-production-53a0.up.railway.app', '127.0.0.1']
+ALLOWED_HOSTS = ['web-production-53a0.up.railway.app', '127.0.0.1', 'mherman.pythonanywhere.com']
 
 
 # Application definition
@@ -116,6 +118,18 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASES['default'] = dj_database_url.config(
+    default='sqlite:////home/mherman/RSWTA/db.sqlite3',
+    conn_max_age=600,
+    conn_health_checks=True,
+    )
+
+DATABASES['default'] = dj_database_url.parse(
+    'sqlite:////home/mherman/RSWTA/db.sqlite3',
+    conn_max_age=600,
+    conn_health_checks=True,
+    )
 
 # Update database configuration from $DATABASE_URL environment variable (if defined)
 import dj_database_url
