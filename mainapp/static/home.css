@@ -2,6 +2,19 @@ body {
     background-color: var(--background);
 }
 
+.items{
+    text-align: center;
+    margin: auto;
+    width: 70vw;
+    padding-bottom: 8vh;
+}
+
+.items::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 .item {
     margin: 20px;
     text-align: center;

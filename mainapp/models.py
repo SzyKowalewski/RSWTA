@@ -24,6 +24,13 @@ class Produkcje(models.Model): # NOQA
     def __str__(self):
         return self.Tytul
 
+    def average_rating(self):
+        opinie = self.rezencje_set.all()
+        if not opinie:
+            return 0
+        total_score = sum(opinia.Ocena for opinia in opinie)
+        return total_score / len(opinie)
+
 class Uzytkownicy(models.Model): # NOQA
     class Meta:
         verbose_name_plural = 'Uzytkownicy'
@@ -52,6 +59,7 @@ class Do_obejrzenia(models.Model): # NOQA
 class Rezencje(models.Model): # NOQA
     class Meta:
         verbose_name_plural = 'Rezencje'
+        unique_together = ('ID_Uzytkownika', 'ID_Produkcji')
     Ocena = models.IntegerField() # NOQA
     Komentarz = models.TextField() # NOQA
     ID_Uzytkownika = models.ForeignKey(Uzytkownicy,verbose_name="Nazwa Użytkownika", on_delete=models.CASCADE) # NOQA

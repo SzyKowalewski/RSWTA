@@ -5,9 +5,15 @@
 {% block content %}
 <style>
     input[type=checkbox] {
-    transform: scale(1.5);
-}
+        transform: scale(1.5);
+    }
+
+    input[type=submit] {
+        transform: scale(1.1);
+        border: none;
+    }
 </style>
+
 <div style="margin: 20px; color: white;">
     <h2>{{user.Nazwa_Uzytkownika}}</h2>
     <h2>{{user.E_mail}}</h2>
@@ -16,12 +22,38 @@
         <input type="checkbox" disabled> {% endif %}</label>
     </h2><br />
     <a href="/my_watchlist/"><div class="button" style="float: left; margin-right: 20px;"> Do obejrzenia</div></a>
-    <a href="/my_watched_list/"><div class="button" style="float: left"> Obejrzane</div></a>
+    <a href="/my_watched_list/"><div class="button" style="float: left; margin-right: 20px;"> Obejrzane</div></a>
 
-    <div style="margin: 20px; cursor: pointer; width: fit-content; user-select: none;"
-         class="button" onclick="popup_data()" id="popup_button">Edytuj swoje konto</div>
-         <div id="edit_profile_popup" style="display: none">
+    <div style="float: left; width: fit-content; user-select: none; margin-right: 20px;"
+         class="button" onclick="popup_data()" id="edit_profile_button">Edytuj swoje konto</div>
 
+    <div style="float: left; width: fit-content; user-select: none; margin-right: 20px;"
+         class="button" onclick="popup_password()" id="edit_password_button">Edytuj swoje hasło</div>
+
+    {% if user.Publiczne %}
+        <div style="float: left;">
+            <form action="" method="POST">
+                <input type="hidden" name="id_uzytkownika" value="{{ user.id }}" />
+                <input type="hidden" name="formType" value="public">
+                <input type="submit" value="Ukryj swoje dane" class="button">
+                {% csrf_token %}
+            </form>
+        </div>
+    {% else %}
+        <div>
+            <form action="" method="POST">
+                <input type="hidden" name="id_uzytkownika" value="{{ user.id }}" />
+                <input type="hidden" name="formType" value="public">
+                <input type="submit" value="Upublicznij swoje dane" class="button">
+                {% csrf_token %}
+            </form>
+        </div>
+    {% endif %}
+
+    <br />
+    <div style="clear: both;"></div>
+
+    <div id="edit_profile_popup" style="display: none">
         <form action="" method="POST">
             <label>Nazwa Użytkownika: <input type="text" name="username" value="{{ user.Nazwa_Uzytkownika }}"/></label><br /><br />
             <label>Email: <input type="text" name="email" value="{{ user.E_mail }}" /></label><br /><br />
@@ -34,48 +66,45 @@
         </form>
     </div>
 
-    <div style="margin: 20px; cursor: pointer; width: fit-content; user-select: none;"
-         class="button" onclick="popup_password()" id="popup_button">Edytuj swoje hasło</div>
-         <div id="edit_password_popup" style="display: none">
-    
-            <form action="" method="POST">
-                <label>Old Password: <input type="password" name="oldPassword" /></label><br /><br />
-                <label>New Password: <input type="password" name="newPassword" /></label><br /><br />
-                <label>Confirm Password: <input type="password" name="confirmPassword" /></label><br /><br />
-                <input type="hidden" name="id_uzytkownika" value="{{ user.id }}" />
-                <input type="hidden" name="formType" value="password">
-    
-                <input type="submit" value="Potwierdź">
-                {% csrf_token %}
-            </form>
-        </div>
-<span class="error">{{ error }}</span>
+    <div id="edit_password_popup" style="display: none">
+        <form action="" method="POST">
+            <label>Old Password: <input type="password" name="oldPassword" /></label><br /><br />
+            <label>New Password: <input type="password" name="newPassword" /></label><br /><br />
+            <label>Confirm Password: <input type="password" name="confirmPassword" /></label><br /><br />
+            <input type="hidden" name="id_uzytkownika" value="{{ user.id }}" />
+            <input type="hidden" name="formType" value="password">
+
+            <input type="submit" value="Potwierdź">
+            {% csrf_token %}
+        </form>
+    </div>
+    <span class="error">{{ error }}</span>
 
 <script>
     let visible = false;
+    let visible2 = false;
     function popup_data(){
         if(!visible){
             visible = true;
             document.getElementById("edit_profile_popup").style.display = "";
-            document.getElementById("popup_button").innerHTML = "Anuluj";
+            document.getElementById("edit_profile_button").innerHTML = "Anuluj";
         }
         else{
             visible = false;
             document.getElementById("edit_profile_popup").style.display = "none";
-            document.getElementById("popup_button").innerHTML = "Edytuj swoje konto";
+            document.getElementById("edit_profile_button").innerHTML = "Edytuj swoje konto";
         }
     }
-    let visible2 = false;
     function popup_password(){
-        if(!visible){
+        if(!visible2){
             visible2 = true;
             document.getElementById("edit_password_popup").style.display = "";
-            document.getElementById("popup_button").innerHTML = "Anuluj";
+            document.getElementById("edit_password_button").innerHTML = "Anuluj";
         }
         else{
             visible2 = false;
             document.getElementById("edit_password_popup").style.display = "none";
-            document.getElementById("popup_button").innerHTML = "Edytuj swoje hasło";
+            document.getElementById("edit_password_button").innerHTML = "Edytuj swoje hasło";
         }
     }
 </script>
