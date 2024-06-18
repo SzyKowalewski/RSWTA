@@ -18,7 +18,10 @@ import logging
 import dj_database_url
 
 
+
 mimetypes.add_type("text/css", ".css", True)
+mimetypes.add_type("text/html", ".css", True)
+mimetypes.add_type("text/html", ".js", True)
 
 LOGGING = {
     'version': 1,
@@ -77,6 +80,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -176,8 +180,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # style I guess
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'mainapp/static'
 
+WHITENOISE_MIMETYPES = {
+    '.css': 'text/css',
+    '.js': 'text/javascript'
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
