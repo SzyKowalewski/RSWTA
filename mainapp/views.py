@@ -1,7 +1,5 @@
 from django.contrib.auth.models import User
 from django.http import Http404
-
-# Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from .models import Produkcje, Kategorie, Rezencje, Uzytkownicy, Do_obejrzenia, Obejrzane
@@ -12,6 +10,15 @@ import logging
 logger = logging.getLogger(__name__)
 
 def widok_home(request):
+    """
+    View for the home page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered home page.
+    """
     logger.info('Strona główna została wyświetlona')
     kategorie = Kategorie.objects.all()
     filmy = Produkcje.objects.all()
@@ -25,11 +32,21 @@ def widok_home(request):
     if wpisana_fraza:
         filmy = filmy.filter(Q(Tytul__icontains=wpisana_fraza) | Q(Rezyser__icontains=wpisana_fraza))
 
-    user = request.user  # Pobieramy użytkownika z requestu
+    user = request.user
     return render(request, 'home.html', {'filmy': filmy, 'kategorie': kategorie, 'user': user})
 
 
 def details_view(request, film_id):
+    """
+    View for the details of a film.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        film_id (int): The ID of the film.
+
+    Returns:
+        HttpResponse: The rendered film details page or missing data page if film is not found.
+    """
     logger.info(f'Szczegóły filmu o id {film_id} zostały wyświetlone')
     try:
         film = get_object_or_404(Produkcje, id=film_id)
@@ -107,11 +124,20 @@ def details_view(request, film_id):
                         logger.info(f'Dodanie nowej recenzji użytkownika o id {id_uzytkownika}')
                 return redirect(f'/info/{film_id}/')
 
-        user = request.user  # Pobieramy użytkownika z requestu
-        return render(request, 'movie_info.html', {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user,'average_rating': film.average_rating()})
+        user = request.user
+        return render(request, 'movie_info.html', {'film': film, 'opinie': opinie, 'uzytkownicy': uzytkownicy, 'user': user, 'average_rating': film.average_rating()})
 
 
 def login_view(request):
+    """
+    View for the login page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered login page or redirect to home page if login is successful.
+    """
     logger.info('Próba logowania')
     if request.method == 'POST':
         email = request.POST['email']
@@ -122,7 +148,6 @@ def login_view(request):
         except Uzytkownicy.DoesNotExist:
             logger.warning(f'Próba logowania nieudana. Użytkownik o adresie email {email} nie istnieje')
             user = None
-            logger.warning(f'Próba logowania nieudana. Użytkownik o adresie email {email} nie istnieje')
         if user is not None and user.check_password(password):
             request.session['user_id'] = user.id
             return redirect('home')
@@ -134,6 +159,15 @@ def login_view(request):
 
 
 def register_view(request):
+    """
+    View for the registration page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered registration page or redirect to login page if registration is successful.
+    """
     logger.info('Próba rejestracji nowego użytkownika')
     if request.method == "POST":
         email = request.POST['email']
@@ -161,6 +195,15 @@ def register_view(request):
 
 
 def logged_user_account_view(request):
+    """
+    View for the logged-in user's account page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered account page or redirect to login page if user is not logged in.
+    """
     logger.info('Wyświetlenie konta zalogowanego użytkownika')
     if request.method == 'POST':
         if request.POST.get('formType') == 'data':
@@ -213,7 +256,7 @@ def logged_user_account_view(request):
                 logger.warning(f'Nieudana próba zmiany hasła użytkownika o id {id_uzytkownika}. Stare hasło jest niepoprawne')
                 return render(request, 'my_account.html', {'error': 'Stare hasło nie jest poprawne'})
 
-    user = request.user  # Pobieramy użytkownika z requestu
+    user = request.user
 
     if user.id is not None:
         return render(request, 'my_account.html', {'user': user})
@@ -222,6 +265,16 @@ def logged_user_account_view(request):
 
 
 def user_account_view(request, user_id):
+    """
+    View for another user's account page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        user_id (int): The ID of the user.
+
+    Returns:
+        HttpResponse: The rendered user account page or missing data page if user is not found.
+    """
     logger.info(f'Wyświetlenie konta użytkownika o id {user_id}')
     try:
         user = get_object_or_404(Uzytkownicy, id=user_id)
@@ -233,12 +286,31 @@ def user_account_view(request, user_id):
 
 
 def logout_view(request):
+    """
+    View for logging out.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Redirect to the home page.
+    """
     logger.info('Wylogowanie')
     logout(request)
     return redirect('home')
 
 
 def add_to_watchlist(request, film_id):
+    """
+    View for adding a film to the watchlist.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        film_id (int): The ID of the film.
+
+    Returns:
+        HttpResponse: Redirect to the film's info page.
+    """
     logger.info(f'Dodanie filmu o id {film_id} do listy "Do obejrzenia"')
     if request.method == 'POST':
         user_id = request.POST['user_id']
@@ -253,6 +325,16 @@ def add_to_watchlist(request, film_id):
 
 
 def add_to_watchedlist(request, film_id):
+    """
+    View for adding a film to the watched list.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        film_id (int): The ID of the film.
+
+    Returns:
+        HttpResponse: Redirect to the film's info page.
+    """
     logger.info(f'Dodanie filmu o id {film_id} do listy "Obejrzane"')
     if request.method == 'POST':
         user_id = request.POST['user_id']
@@ -267,6 +349,16 @@ def add_to_watchedlist(request, film_id):
 
 
 def watchlist_view(request, wl_user_id):
+    """
+    View for displaying another user's watchlist.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        wl_user_id (int): The ID of the user whose watchlist is to be displayed.
+
+    Returns:
+        HttpResponse: The rendered watchlist page or missing data page if user is not found.
+    """
     logger.info('Wyświetlenie listy "Do obejrzenia"')
     try:
         wl_user = get_object_or_404(Uzytkownicy, id=wl_user_id)
@@ -285,6 +377,16 @@ def watchlist_view(request, wl_user_id):
 
 
 def watched_list_view(request, wl_user_id):
+    """
+    View for displaying another user's watched list.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        wl_user_id (int): The ID of the user whose watched list is to be displayed.
+
+    Returns:
+        HttpResponse: The rendered watched list page or missing data page if user is not found.
+    """
     logger.info('Wyświetlenie listy "Obejrzane"')
     try:
         wl_user = get_object_or_404(Uzytkownicy, id=wl_user_id)
@@ -303,6 +405,15 @@ def watched_list_view(request, wl_user_id):
 
 
 def my_watchlist_view(request):
+    """
+    View for displaying the logged-in user's watchlist.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered watchlist page.
+    """
     logger.info('Wyświetlenie listy "Do obejrzenia" użytkownika')
     if request.method == 'POST':
         user_id = request.POST['user_id']
@@ -323,6 +434,15 @@ def my_watchlist_view(request):
 
 
 def my_watched_list_view(request):
+    """
+    View for displaying the logged-in user's watched list.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered watched list page.
+    """
     logger.info('Wyświetlenie listy "Obejrzanych" użytkownika')
     if request.method == 'POST':
         user_id = request.POST['user_id']
@@ -343,5 +463,11 @@ def my_watched_list_view(request):
 
 
 class BaseView(generic.base.TemplateView):
+    """
+    Base view for rendering the base template.
+
+    Attributes:
+        template_name (str): The name of the template to render.
+    """
     logger.info('Wyświetlenie strony bazowej')
     template_name = "base.html"
